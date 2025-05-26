@@ -6,11 +6,10 @@ class VendedorDTO {
     public $nombre;
     public $email;
 
-    public function __construct($id, $nombre, $descripcion, $precio) {
+    public function __construct($id, $nombre, $email) {
         $this->id = $id;
         $this->nombre = $nombre;
-        $this->descripcion = $descripcion;
-        $this->precio = $precio;
+        $this->email = $email;
     }
 
     public function toJson() {

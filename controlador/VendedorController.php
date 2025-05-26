@@ -32,23 +32,23 @@ class VendedorController {
 
     
     public function create() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $inputJSON = file_get_contents("php://input");
-            $inputData = json_decode($inputJSON, true); 
-            $nombre = $inputData['nombre'] ?? '';
-            $email = $inputData['email'] ?? '';
-            $telefono = $inputData['telefono'] ?? 0;
+       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $inputJSON = file_get_contents("php://input");
+        $inputData = json_decode($inputJSON, true); 
+        $nombre = $inputData['nombre'] ?? '';
+        $email = $inputData['email'] ?? '';
+        $telefono = $inputData['telefono'] ?? 0;
 
-            $vendedor = new Articulo();
-            $vendedor->setNombre($nombre);
-            $vendedor->setEmail($email);
-            $vendedor->setTelefono($telefono);
+        $vendedor = new Vendedor();
+        $vendedor->setNombre($nombre);
+        $vendedor->setEmail($email);
+        $vendedor->setTelefono($telefono);
 
-            if ($articulo->guardar()) {
-                echo json_encode(["mensaje" => "Vendedor creado correctamente"]);
-            } else {
-                echo json_encode(["error" => "Error al guardar el vendedor"]);
-            }
+        if ($vendedor->guardar()) {
+            echo json_encode(["mensaje" => "Vendedor creado correctamente"]);
+        } else {
+            echo json_encode(["error" => "Error al guardar el vendedor"]);
+        }
         } else {
             echo json_encode(["error" => "Método no permitido"]);
         }

@@ -4,14 +4,14 @@ class ArticuloDTO {
     
     public $id;
     public $nombre;
-    public $email; 
-    public $telefono;
+    public $precio; 
+    public $stock;
 
-    public function __construct($id, $nombre, $email, $telefono) {
+    public function __construct($id, $nombre, $precio, $stock) {
         $this->id = $id;
         $this->nombre = $nombre;
-        $this->email = $email;
-        $this->telefono = $telefono;
+        $this->precio = $precio;
+        $this->stock = $stock;
     }
 
     public function toJson() {

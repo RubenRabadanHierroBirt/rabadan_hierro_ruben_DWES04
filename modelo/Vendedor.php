@@ -24,17 +24,23 @@ class Vendedor {
         return $stmt->execute([
             ':nombre' => $this->nombre,
             ':email' => $this->email,
-            ':telefana' => $this->telefono,
+            ':telefono' => $this->telefono,
         ]);
     }
     public function get() {
         $sql = "SELECT * FROM vendedor";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
-        
-        // Devuelve los resultados como un array asociativo
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getById($id) {
+        $sql = "SELECT * FROM vendedor WHERE ID = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
 
 

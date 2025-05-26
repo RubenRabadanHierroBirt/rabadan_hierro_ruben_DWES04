@@ -46,28 +46,31 @@ class ClienteController {
             return new ClienteDTO(
                 $cliente['ID'],
                 $cliente['NOMBRE'],
-                $cliente['EMAIL']
+                $cliente['EMAIL'],
+                $cliente['DIRECCION'],
             );
         }, $clientes);
 
         echo json_encode($clientesDTO);
     }
 
-    public function getById($id) {
-        $cliente = $this->clienteModel->getById($id);
+   public function getById($id) {
+    $cliente = $this->clienteModel->getById($id);
 
-        if ($cliente) {
-            $dto = new ClienteDTO(
-                $cliente['ID'],
-                $cliente['NOMBRE'],
-                $cliente['EMAIL']
-            );
-            echo json_encode($dto);
-        } else {
-            http_response_code(404);
-            echo json_encode(["error" => "Cliente no encontrado"]);
-        }
+    if ($cliente) {
+        $clienteDTO = new ClienteDTO(
+            $cliente['ID'],
+            $cliente['NOMBRE'],
+            $cliente['EMAIL'],
+            $cliente['DIRECCION']
+        );
+        echo json_encode($clienteDTO);
+    } else {
+        http_response_code(404);
+        echo json_encode(["error" => "Cliente no encontrado"]);
     }
+}
+
 
     public function update($id) {
         if ($_SERVER['REQUEST_METHOD'] === 'PUT') {

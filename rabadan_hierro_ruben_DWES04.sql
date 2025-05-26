@@ -178,7 +178,7 @@ ALTER TABLE `linea_pedido`
 -- Filtros para la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `cliente` (`ID`),
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`CLIENTE`) REFERENCES `cliente` (`ID`),
   ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`VENDEDOR`) REFERENCES `vendedor` (`ID`);
 COMMIT;
 

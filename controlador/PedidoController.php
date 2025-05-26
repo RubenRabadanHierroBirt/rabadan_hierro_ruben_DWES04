@@ -35,14 +35,35 @@ class PedidoController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $inputJSON = file_get_contents("php://input");
             $inputData = json_decode($inputJSON, true);
-            $cliente = $inputData['cliente'] ?? '';
-            $vendedor = $inputData['vendedor'] ?? '';
+            $clienteId = $inputData['cliente'] ?? '';
+            $vendedorId = $inputData['vendedor'] ?? '';
             $fecha = $inputData['fecha'] ?? 0;
             $estado = $inputData['estado'] ?? 0;
 
+
+            // Verificar cliente
+            require_once '../modelo/Cliente.php';
+            $clienteModel = new Cliente();
+            $cliente = $clienteModel->getById($clienteId);
+            if (!$cliente) {
+                http_response_code(404);
+                echo json_encode(["error" => "Cliente no encontrado"]);
+                return;
+            }
+
+            // Verificar vendedor
+            require_once '../modelo/Vendedor.php';
+            $vendedorModel = new Vendedor();
+            $vendedor = $vendedorModel->getById($vendedorId);
+            if (!$vendedor) {
+                http_response_code(404);
+                echo json_encode(["error" => "Vendedor no encontrado"]);
+                return;
+            }
+
             $pedido = new Pedido();
-            $pedido->setNombre($nombre);
-            $pedido->setVendedor($vendedor);
+            $pedido->setCliente($clienteId);
+            $pedido->setVendedor($vendedorId);
             $pedido->setFecha($fecha);
             $pedido->setEstado($estado);
 

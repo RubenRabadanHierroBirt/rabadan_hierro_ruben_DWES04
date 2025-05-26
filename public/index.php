@@ -40,7 +40,7 @@ $router->add('/clientes', 'ClienteController@get');
 $router->add('/clientes/post', 'ClienteController@create');
 $router->add('/clientes/put/{id}', 'ClienteController@update');
 $router->add('/clientes/delete/{id}', 'ClienteController@delete');
-$router->add('/articulos/get/{id}', 'ArticuloController@getById');
+$router->add('/clientes/get/{id}', 'ClienteController@getById');
 
 
 // Rutas para Pedidos
@@ -53,7 +53,6 @@ $router->add('/pedidos/delete/{id}', 'PedidoController@delete');
 $router->add('/vendedores', 'VendedorController@get');
 $router->add('/vendedores/post', 'VendedorController@create');
 $router->add('/vendedores/put/{id}', 'VendedorController@update');
-$router->add('/vendedores/delete/{id}', 'VendedorController@delete');
 
 // Despachar la solicitud
 $router->dispatch($relativeUrl);

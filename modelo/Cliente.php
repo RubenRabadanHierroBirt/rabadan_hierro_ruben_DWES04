@@ -37,18 +37,14 @@ class Cliente {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getByEmail() {
-        $sql = "SELECT * FROM cliente WHERE email = :email";
+    public function getById($id) {
+        $sql = "SELECT * FROM cliente WHERE ID = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':id' => $id]);
-
-        $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$cliente){
-            return ["error" => "No se encontró el artículo con ID $id"];
-        }
-        return $cliente;
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+
 }
 
 

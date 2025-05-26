@@ -23,7 +23,7 @@ class Pedido {
     
 
     public function guardar() {
-        $sql = "INSERT INTO pedido (CLEINTE, VENDEDOR, FECHA, ESTADO) VALUES (:cliente, :vendedor, :fecha, :estado)";
+        $sql = "INSERT INTO pedido (CLIENTE, VENDEDOR, FECHA, ESTADO) VALUES (:cliente, :vendedor, :fecha, :estado)";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             ':cliente' => $this->cliente,
