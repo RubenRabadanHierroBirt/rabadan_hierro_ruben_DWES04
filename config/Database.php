@@ -4,7 +4,7 @@ class Database {
     private $connection;
 
     private function __construct() {
-        $this->connection = new PDO("mysql:host=localhost;dbname=dwesruben", "root", "");
+        $this->connection = new PDO("mysql:host=localhost;dbname=rabadan_hierro_ruben_DWES04", "root", "");
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
