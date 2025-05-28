@@ -11,6 +11,8 @@ class PedidoController {
     }
 
     public function get() {
+    require_once '../modelo/LineaPedido.php';
+    $lineaModel = new LineaPedido();
     $pedidos = $this->pedidoModel->get();
 
     if (!$pedidos || count($pedidos) === 0) {
@@ -18,17 +20,20 @@ class PedidoController {
         return;
     }
 
-    $pedidosDTO = array_map(function ($pedido) {
-        return new PedidoDTO(
-            $pedido['CLIENTE'],
-            $pedido['VENDEDOR'],
-            $pedido['FECHA'],
-            $pedido['ESTADO']
-        );
+    $pedidosDTO = array_map(function ($pedido) use ($lineaModel) {
+    $lineas = $lineaModel->getPorPedido($pedido['ID']);
+    $dto = new PedidoDTO(
+        $pedido['CLIENTE'],
+        $pedido['VENDEDOR'],
+        $pedido['FECHA'],
+        $pedido['ESTADO'],
+        $lineas
+    );
+    return $dto->toArray();
     }, $pedidos);
 
     echo json_encode($pedidosDTO);
-}
+    }
 
 
     public function create() {
@@ -77,13 +82,45 @@ class PedidoController {
         }
     }
 
-    public function delete() {
-        $inputJSON = file_get_contents("php://input");
-        $inputData = json_decode($inputJSON, true);
-        $id = $inputData['id'] ?? '';
-        $pedido = new Pedido();
-        $pedido->setID($id);
+   public function delete($id) {
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            $pedidoExistente = $this->pedidoModel->getById($id);
+
+            if (!$pedidoExistente) {
+                http_response_code(404);
+                echo json_encode(["error" => "Pedido no encontrado"]);
+                return;
+            }
+
+            // Valida que la fecha del pedido sea posterior
+            $fechaPedido = new DateTime($pedidoExistente['FECHA']);
+            $fechaActual = new DateTime();
+
+            if ($fechaPedido <= $fechaActual) {
+                http_response_code(403);
+                echo json_encode(["error" => "El pedido no puede eliminarse porque la fecha no es futura"]);
+                return;
+            }
+
+            // Validar que el estado sea 'pendiente'
+            if (strtolower($pedidoExistente['ESTADO']) !== 'pendiente') {
+                http_response_code(403);
+                echo json_encode(["error" => "Solo se pueden eliminar pedidos con estado 'pendiente'"]);
+                return;
+            }
+
+            if ($this->pedidoModel->delete($id)) {
+                echo json_encode(["mensaje" => "Pedido y sus líneas eliminados correctamente"]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["error" => "Error al eliminar el pedido"]);
+            }
+        } else {
+            http_response_code(405);
+            echo json_encode(["error" => "Método no permitido"]);
+        }
     }
+
 
     public function update($id) {
         if ($_SERVER['REQUEST_METHOD'] === 'PUT') {

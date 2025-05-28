@@ -4,13 +4,15 @@ class ArticuloDTO {
     
     public $id;
     public $nombre;
-    public $precio; 
+    public $precio;
+    public $descripcion; 
     public $stock;
 
-    public function __construct($id, $nombre, $precio, $stock) {
+    public function __construct($id, $nombre, $precio, $descripcion, $stock) {
         $this->id = $id;
         $this->nombre = $nombre;
         $this->precio = $precio;
+        $this->descripcion = $descripcion;
         $this->stock = $stock;
     }
 

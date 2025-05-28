@@ -34,6 +34,7 @@ $router->add('/articulos', 'ArticuloController@get');
 $router->add('/articulos/post', 'ArticuloController@create');
 $router->add('/articulos/put/{id}', 'ArticuloController@update');
 $router->add('/articulos/delete/{id}', 'ArticuloController@delete');
+$router->add('/articulos/get/{id}', 'ArticuloController@getById');
 
 // Rutas para Clientes
 $router->add('/clientes', 'ClienteController@get');

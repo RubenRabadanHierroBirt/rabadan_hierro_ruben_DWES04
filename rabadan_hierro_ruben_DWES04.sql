@@ -35,6 +35,15 @@ CREATE TABLE `articulo` (
   `STOCK` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `articulo`
+--
+
+INSERT INTO articulo (ID, NOMBRE, DESCRIPCION, PRECIO, STOCK) VALUES
+(1, 'Ratón Inalámbrico', 'Ratón óptico ergonómico', 15.99, 100),
+(2, 'Teclado Mecánico', 'Teclado con retroiluminación RGB', 49.99, 50),
+(3, 'Pantalla 24"', 'Monitor LED FullHD', 129.99, 30);
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +58,15 @@ CREATE TABLE `cliente` (
   `DIRECCION` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO cliente (ID, NOMBRE, EMAIL, TELEFONO, DIRECCION) VALUES
+(1, 'Pedro Martín', 'pedro@gmail.com', 698765432, 'Calle Falsa 123'),
+(2, 'María Sánchez', 'maria@gmail.com', 687654321, 'Av. Siempre Viva 742'),
+(3, 'Luis Gómez', 'luis@gmail.com', 676543210, 'Paseo del Prado 1');
+
 -- --------------------------------------------------------
 
 --
@@ -62,6 +80,16 @@ CREATE TABLE `linea_pedido` (
   `CANTIDAD` int(11) NOT NULL,
   `PRECIO` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `linea_pedido`
+--
+
+INSERT INTO linea_pedido (ID, PEDIDO, ARTICULO, CANTIDAD, PRECIO) VALUES
+(1, 1, 1, 2, 15.99),
+(2, 1, 2, 1, 49.99),
+(3, 2, 3, 1, 129.99),
+(4, 3, 1, 1, 15.99);
 
 -- --------------------------------------------------------
 
@@ -78,6 +106,15 @@ CREATE TABLE `pedido` (
   `ESTADO` enum('pendiente','enviado','cancelado','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO pedido (ID, CLIENTE, VENDEDOR, TOTAL, FECHA, ESTADO) VALUES
+(1, 1, 1, 65.98, '2025-05-20', 'enviado'),
+(2, 2, 2, 129.99, '2025-05-21', 'pendiente'),
+(3, 3, 3, 15.99, '2025-05-22', 'cancelado');
+
 -- --------------------------------------------------------
 
 --
@@ -90,6 +127,16 @@ CREATE TABLE `vendedor` (
   `EMAIL` varchar(100) NOT NULL,
   `TELEFONO` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `vendedor`
+--
+
+INSERT INTO vendedor (ID, NOMBRE, EMAIL, TELEFONO) VALUES
+(1, 'Ana López', 'ana@empresa.com', 612345678),
+(2, 'Carlos Ruiz', 'carlos@empresa.com', 623456789),
+(3, 'Lucía Torres', 'lucia@empresa.com', 634567890);
+
 
 --
 -- Índices para tablas volcadas

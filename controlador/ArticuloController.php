@@ -42,7 +42,7 @@ class ArticuloController {
         }
 
         $articulosDTO = array_map(function ($articulo) {
-            return new ArticuloDTO($articulo['ID'], $articulo['NOMBRE'], $articulo['DESCRIPCION'], $articulo['PRECIO']);
+            return new ArticuloDTO($articulo['ID'], $articulo['NOMBRE'], $articulo['DESCRIPCION'], $articulo['PRECIO'], $articulo['STOCK']);
         }, $articulos);
 
         echo json_encode($articulosDTO);
@@ -76,14 +76,14 @@ class ArticuloController {
             }
 
             $articuloObj = new Articulo();
-            $articuloObj->setId($id);
+            //$articuloObj->setId($id);
             $articuloObj->setNombre($nombre);
             $articuloObj->setDescripcion($descripcion);
             $articuloObj->setPrecio($precio);
             $articuloObj->setStock($stock);
 
-            if ($articuloObj->update()) {
-                $dto = new ArticuloDTO($id, $nombre, $descripcion, $precio);
+            if ($articuloObj->update($id)) {
+                $dto = new ArticuloDTO($id, $nombre, $descripcion, $precio, $stock);
                 echo json_encode($dto);
             } else {
                 echo json_encode(["error" => "Error al actualizar el artículo"]);

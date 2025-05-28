@@ -41,24 +41,18 @@ class Pedido {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function delete($id){
-        $sql = "SELECT * FROM pedido WHERE fecha > CURDATE() - INTERVAL 1 DAY AND ID = :id;";
+    public function delete($id) {
+        $sql = "DELETE FROM pedido WHERE ID = :id";
         $stmt = $this->db->prepare($sql);
-        $compruebafecha = $stmt->execute([
-            ':id' =>$this->id
-        ]);
-        if(!$compruebafecha){
-            return ["error" => "No hay para eliminar"];
-        }else{
-            $sql = "DELETE FROM pedido WHERE ID = :id;";
-            $stmt = $this->db->prepare($sql);
-            $borrado = $stmt->execute([
-            ':id' => $this->id
-            ]);
-        
-        return ["mensaje" => "Eliminado correctamente"];
-        }
+        return $stmt->execute([':id' => $id]);
     }
+    public function getById($id) {
+        $sql = "SELECT * FROM pedido WHERE ID = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
 
 

@@ -44,6 +44,19 @@ class Articulo {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+public function update($id) {
+    $sql = "UPDATE articulo SET NOMBRE = :nombre, DESCRIPCION = :descripcion, PRECIO = :precio, STOCK = :stock WHERE ID = :id";
+    $stmt = $this->db->prepare($sql);
+    return $stmt->execute([
+        ':nombre' => $this->nombre,
+        ':descripcion' => $this->descripcion,
+        ':precio' => $this->precio,
+        ':stock' => $this->stock,
+        ':id' => $id
+    ]);
+}
+
+
 }
 
 
